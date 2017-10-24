@@ -17,7 +17,6 @@
 		0D59781D1F9AA2760051F8F4 /* AVStoryBookUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D59781C1F9AA2760051F8F4 /* AVStoryBookUITests.m */; };
 		0D59782C1F9AA3D10051F8F4 /* PageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D59782B1F9AA3D10051F8F4 /* PageModel.m */; };
 		0D59782F1F9AAA430051F8F4 /* PageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D59782E1F9AAA430051F8F4 /* PageViewController.m */; };
-		0D5978321F9BE67E0051F8F4 /* PageModelHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D5978311F9BE67E0051F8F4 /* PageModelHandler.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,8 +57,6 @@
 		0D59782B1F9AA3D10051F8F4 /* PageModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PageModel.m; sourceTree = "<group>"; };
 		0D59782D1F9AAA430051F8F4 /* PageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PageViewController.h; sourceTree = "<group>"; };
 		0D59782E1F9AAA430051F8F4 /* PageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PageViewController.m; sourceTree = "<group>"; };
-		0D5978301F9BE67D0051F8F4 /* PageModelHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PageModelHandler.h; sourceTree = "<group>"; };
-		0D5978311F9BE67E0051F8F4 /* PageModelHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PageModelHandler.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,11 +113,9 @@
 				0D59782E1F9AAA430051F8F4 /* PageViewController.m */,
 				0D5977FB1F9AA2760051F8F4 /* StoryPartViewController.h */,
 				0D5977FC1F9AA2760051F8F4 /* StoryPartViewController.m */,
-				0D5978301F9BE67D0051F8F4 /* PageModelHandler.h */,
-				0D5978311F9BE67E0051F8F4 /* PageModelHandler.m */,
 				0D59782A1F9AA3D10051F8F4 /* PageModel.h */,
-				0D59782B1F9AA3D10051F8F4 /* PageModel.m */,
 				0D5977FE1F9AA2760051F8F4 /* Main.storyboard */,
+				0D59782B1F9AA3D10051F8F4 /* PageModel.m */,
 				0D5978011F9AA2760051F8F4 /* Assets.xcassets */,
 				0D5978031F9AA2760051F8F4 /* LaunchScreen.storyboard */,
 				0D5978061F9AA2760051F8F4 /* Info.plist */,
@@ -285,7 +280,6 @@
 				0D5978081F9AA2760051F8F4 /* main.m in Sources */,
 				0D59782F1F9AAA430051F8F4 /* PageViewController.m in Sources */,
 				0D5977FA1F9AA2750051F8F4 /* AppDelegate.m in Sources */,
-				0D5978321F9BE67E0051F8F4 /* PageModelHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

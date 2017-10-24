@@ -4,6 +4,8 @@
 
 @interface StoryPartViewController () <UIImagePickerControllerDelegate>
 
+@property (nonatomic) NSString *path;
+
 @end
 
 @implementation StoryPartViewController
@@ -11,57 +13,79 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+ 
     
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(playAudio:)];
-    [self.imageView addGestureRecognizer:tapGesture];
+    self.imageView.image = self.pageModel.image;
+
+    NSArray* allPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, true);
+    NSString *fileName = [NSString stringWithFormat:@"myAudio%lu.m4a", (unsigned long)self.pageIndex];
+
     
-    // Set the audio file
-    NSArray *path = [NSArray arrayWithObjects:
-                     [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)
-                      lastObject], @"myAudio.m4a",  nil];
+    NSString* myPath = [[allPaths objectAtIndex:0] stringByAppendingPathComponent: fileName];
     
-    NSURL *filURL = [NSURL fileURLWithPathComponents:path];
+    NSFileManager *myManager = [NSFileManager defaultManager];
     
-    // Setup audio session
-    AVAudioSession *session = [AVAudioSession sharedInstance];
-    [session setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
+    
+    
+    self.path = myPath;
+    self.pageModel.audioFile = [NSURL URLWithString:self.path];
+    NSLog(@"My path sis : %@", myPath);
+    
     
     // Define the recorder setting
     NSMutableDictionary *recordSetting = [[NSMutableDictionary alloc] init];
+    
     
     [recordSetting setValue:[NSNumber numberWithInt: kAudioFormatMPEG4AAC] forKey: AVFormatIDKey];
     [recordSetting setValue:[NSNumber numberWithFloat: 44100.0] forKey: AVSampleRateKey];
     [recordSetting setValue:[NSNumber numberWithInt: 2] forKey: AVNumberOfChannelsKey];
     
-    // Initiate and prepare the recorder
-    _recorder = [[AVAudioRecorder alloc] initWithURL:filURL
+    _recorder = [[AVAudioRecorder alloc] initWithURL:self.pageModel.audioFile
                                             settings:recordSetting
                                                error:NULL];
+
+
+
+
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(playAudio:)];
+    [self.imageView addGestureRecognizer:tapGesture];
+    
+    
+    
+    // Setup audio session
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    [session setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
+    
+    
     _recorder.delegate = self;
     _recorder.meteringEnabled = YES;
-    [_recorder prepareToRecord];
 }
 
 -(void)playAudio:(UITapGestureRecognizer*)sender {
 
-    if (!_recorder.recording){
-        _player = [[AVAudioPlayer alloc] initWithContentsOfURL:_recorder.url error:nil];
-        [_player setDelegate:self];
-        [_player play];
-    }
+    if (_recorder.recording)
+       return;
+
+       
+    if ( self.path == nil)
+        return;
     
+
     
-    // code to stop audio
-    
-//    [_recorder stop];
-//
-//    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-//    [audioSession setActive:NO error:nil];
+    _player = [[AVAudioPlayer alloc] initWithContentsOfURL:self.pageModel.audioFile error:nil];
+    [_player setDelegate:self];
+    [_player play];
+
     
 }
 
 
 - (IBAction)recordAction:(UIButton *)sender {
+   
+    // THIS OVERWRITES THE EXISTING AUDIO FILE AT THE EXISTING PATH EVERYTIME YOU CALL IT!!!!
+    [_recorder prepareToRecord];
+
+    
     if (_player.playing) {
         [_player stop];
     }
@@ -76,10 +100,9 @@
         [_recordButton setBackgroundColor:[UIColor redColor]];
         
     } else {
-        // Pause recording
+        // stop recording
         [_recorder stop];
-        [_recordButton setTitle:@"Record" forState:UIControlStateNormal];
-        [_recordButton setBackgroundColor:[UIColor purpleColor]];
+
     }
 
 }
@@ -88,6 +111,8 @@
 - (void) audioRecorderDidFinishRecording:(AVAudioRecorder *)avrecorder successfully:(BOOL)flag{
     [_recordButton setTitle:@"Record" forState:UIControlStateNormal];
     [_recordButton setBackgroundColor:[UIColor purpleColor]];
+
+    
 }
 
 - (void) audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
@@ -161,7 +186,7 @@ didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
     
     self.imageView.image = chosenImage;
-    
+    self.pageModel.image = chosenImage;
     [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 

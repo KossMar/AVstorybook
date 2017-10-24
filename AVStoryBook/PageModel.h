@@ -7,6 +7,7 @@
 
 @property (nonatomic) UIImage *image;
 @property (nonatomic) NSURL *audioFile;
+@property (nonatomic) NSString *path;
 
 
 @end

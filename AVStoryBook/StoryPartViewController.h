@@ -2,7 +2,6 @@
 
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
-#import "PageModelHandler.h"
 #import "PageModel.h"
 
 
@@ -16,6 +15,7 @@
 @property (nonatomic, strong) AVAudioPlayer *player;
 @property (nonatomic, strong) NSURL *audioFile;
 @property (nonatomic) NSUInteger pageIndex;
+@property (nonatomic) PageModel *pageModel;
 
 @end
 
